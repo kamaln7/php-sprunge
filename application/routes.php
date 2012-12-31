@@ -44,6 +44,7 @@ NAME
 
 SYNOPSIS
     &lt;command&gt; | curl -F 'sprunge=&lt;-' " . URL::full() . "
+    use <a href='data:text/html,<form action=\"" . URL::full() . "\" method=\"POST\"><textarea name=\"sprunge\" cols=\"80\" rows=\"24\"></textarea><br><button type=\"submit\">sprunge</button></form>'>this form</a> to paste from a browser
 
 DESCRIPTION
     -
