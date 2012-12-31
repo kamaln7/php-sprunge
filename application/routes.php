@@ -65,7 +65,7 @@ Route::get('/(:any)', ['as' => 'sprunge', function($hash) {
     $content = Sprunge::where_hash($hash)->first();
 
     if ($content) {
-        return $content->content;
+        return Response::make($content->content, 200, ['Content-Type' => 'text/plain']);
     } else {
         return 'Not found.';
     }
