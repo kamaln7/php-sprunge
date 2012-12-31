@@ -61,13 +61,13 @@ SEE ALSO
     ";
 });
 
-Route::get('/(:any)', ['as' => 'sprunge', function($sprunge) {
-    $content = Sprunge::where_hash($sprunge)->first();
+Route::get('/(:any)', ['as' => 'sprunge', function($hash) {
+    $content = Sprunge::where_hash($hash)->first();
 
     if ($content) {
-        return 'Not found.';
-    } else {
         return $content->content;
+    } else {
+        return 'Not found.';
     }
 }]);
 
@@ -76,11 +76,11 @@ Route::post('/', function() {
    if (!empty($sprunge)) {
        $hash = md5(uniqid());
 
-       $sprunge = new Sprunge;
-       $sprunge->hash = $hash;
-       $sprunge->content($sprunge);
+       $newsprunge = new Sprunge;
+       $newsprunge->hash = $hash;
+       $newsprunge->content = $sprunge;
 
-       if ($sprunge->save()) {
+       if ($newsprunge->save()) {
            return URL::to_route('sprunge', [$hash]);
        } else {
            return 'Error.';
