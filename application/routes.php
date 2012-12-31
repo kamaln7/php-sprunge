@@ -34,7 +34,58 @@
 
 Route::get('/', function()
 {
-	return View::make('home.index');
+	return "
+<style> a { text-decoration: none } </style>
+<pre>
+sprunge(1)                          SPRUNGE                          sprunge(1)
+
+NAME
+    sprunge: command line pastebin.
+
+SYNOPSIS
+    &lt;command&gt; | curl -F 'sprunge=&lt;-' " . URL::full() . "
+
+DESCRIPTION
+    -
+
+EXAMPLES
+    ~$ cat bin/ching | curl -F 'sprunge=&lt;-' " . URL::full() . "
+       " . URL::to_route('sprunge', ['d41d8cd98f00b204e9800998ecf8427e']) . "
+    ~$ firefox " . URL::to_route('sprunge', ['d41d8cd98f00b204e9800998ecf8427e']) . "
+
+SEE ALSO
+    http://github.com/KamalN7/php-sprunge
+
+</pre>
+    ";
+});
+
+Route::get('/(:any)', ['as' => 'sprunge', function($sprunge) {
+    $content = Sprunge::where_hash($sprunge)->first();
+
+    if ($content === false) {
+        return 'Not found.';
+    } else {
+        return $content->content;
+    }
+}]);
+
+Route::post('/', function() {
+   if (!empty(Input::get('sprunge'))) {
+       $hash = md5(uniqid());
+
+       $sprunge = new Sprunge;
+       $sprunge->hash = $hash;
+       $sprunge->content(Input::get('sprunge'));
+
+       if ($sprunge->save()) {
+           return URL::to_route('sprunge', [$hash]);
+       } else {
+           return 'Error.';
+       }
+   } else {
+       return Redirect::to('/');
+   }
 });
 
 /*
