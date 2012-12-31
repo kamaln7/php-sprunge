@@ -63,7 +63,7 @@ SEE ALSO
 Route::get('/(:any)', ['as' => 'sprunge', function($sprunge) {
     $content = Sprunge::where_hash($sprunge)->first();
 
-    if ($content === false) {
+    if ($content) {
         return 'Not found.';
     } else {
         return $content->content;
@@ -71,12 +71,13 @@ Route::get('/(:any)', ['as' => 'sprunge', function($sprunge) {
 }]);
 
 Route::post('/', function() {
-   if (!empty(Input::get('sprunge'))) {
+    $sprunge = Input::get('sprunge');
+   if (!empty($sprunge)) {
        $hash = md5(uniqid());
 
        $sprunge = new Sprunge;
        $sprunge->hash = $hash;
-       $sprunge->content(Input::get('sprunge'));
+       $sprunge->content($sprunge);
 
        if ($sprunge->save()) {
            return URL::to_route('sprunge', [$hash]);
