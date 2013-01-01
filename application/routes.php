@@ -37,17 +37,16 @@ Route::get('/', function()
 	return "
 <style> a { text-decoration: none } </style>
 <pre>
-sprunge(1)                          SPRUNGE                          sprunge(1)
+phpsprunge(1)                          PHPSPRUNGE                          phpsprunge(1)
 
 NAME
-    sprunge: command line pastebin.
+    phpsprunge: command line pastebin.
 
 SYNOPSIS
     &lt;command&gt; | curl -F 'sprunge=&lt;-' " . URL::full() . "
-    use <a href='data:text/html,<form action=\"" . URL::full() . "\" method=\"POST\"><textarea name=\"sprunge\" cols=\"80\" rows=\"24\"></textarea><br><button type=\"submit\">sprunge</button></form>'>this form</a> to paste from a browser
 
 DESCRIPTION
-    -
+    use <a href='data:text/html,<form action=\"" . URL::full() . "\" method=\"POST\"><textarea name=\"sprunge\" cols=\"80\" rows=\"24\"></textarea><br><button type=\"submit\">sprunge</button></form>'>this form</a> to paste from a browser
 
 EXAMPLES
     ~$ cat bin/ching | curl -F 'sprunge=&lt;-' " . URL::full() . "
